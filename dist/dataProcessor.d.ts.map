@@ -1,0 +1,1 @@
+{"version":3,"file":"dataProcessor.d.ts","sourceRoot":"","sources":["../src/dataProcessor.ts"],"names":[],"mappings":"AAEA,UAAU,aAAa;IACnB,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,eAAe,EAAE,MAAM,CAAC;CAC3B;AAED,QAAA,MAAM,WAAW,GAAI,MAAM,GAAG,oBAiB7B,CAAA;AAED,OAAO,EAAE,WAAW,EAAE,CAAC"}

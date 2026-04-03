@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# ReactLab2: Character Counter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application consisting of interacting components to calculate text statistics efficiently.
 
-Currently, two official plugins are available:
+## Components Implemented
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 1. TextInput
+A controlled textarea component for user input.
 
-## React Compiler
+**Props:**
+- `onTextChange`: `(text: string) => void` - Callback to pass the updated text to the parent.
+- `placeholder`: `string` (optional) - Placeholder text for the input.
+- `initialValue`: `string` (optional) - The initial text value.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Example Usage:**
+```tsx
+import { TextInput } from './components/TextInput';
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+function App() {
+  return (
+    <TextInput 
+      placeholder="Type your text here..." 
+      onTextChange={(text) => console.log(text)} 
+    />
+  );
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. StatsDisplay
+A component to display the textual statistics computed from the user input.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Props:**
+- `stats`: `TextStats` object including `characterCount`, `wordCount`, and `readingTime`.
+- `showReadingTime`: `boolean` (optional) - Toggles the display of the estimated reading time.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Example Usage:**
+```tsx
+import { StatsDisplay } from './components/StatsDisplay';
+
+const sampleStats = {
+  characterCount: 150,
+  wordCount: 30,
+  readingTime: 1
+};
+
+function App() {
+  return (
+    <StatsDisplay 
+      stats={sampleStats} 
+      showReadingTime={true} 
+    />
+  );
+}
+```
+
+### 3. CharacterCounter
+The main container component that integrates `TextInput` and `StatsDisplay`.
+
+**Props:**
+- `minWords`: `number` (optional) - Minimum words required validation.
+- `maxWords`: `number` (optional) - Maximum words allowed validation.
+- `targetReadingTime`: `number` (optional) - Target reading time in minutes.
+
+**Example Usage:**
+```tsx
+import { CharacterCounter } from './components/CharacterCounter';
+
+function App() {
+  return (
+    <CharacterCounter 
+      minWords={10} 
+      maxWords={500} 
+    />
+  );
+}
 ```

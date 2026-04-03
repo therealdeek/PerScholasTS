@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# ReactLab1: Component Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a reusable React component library built with TypeScript.
 
-Currently, two official plugins are available:
+## Components Implemented
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 1. AlertBox
+A component to display alert messages to the user.
 
-## React Compiler
+**Props:**
+- `type`: One of `"success"`, `"error"`, `"warning"`, `"info"`.
+- `message`: `string` - The main alert message.
+- `onClose`: `() => void` (optional) - Function to call when dismiss/close is clicked.
+- `children`: `React.ReactNode` (optional) - Additional content inside the alert.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Example Usage:**
+```tsx
+import { AlertBox } from './components/AlertBox';
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+function App() {
+  return (
+    <AlertBox 
+      type="success" 
+      message="Operation completed successfully!" 
+      onClose={() => console.log('Closed')}
+    />
+  );
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. UserProfileCard
+Displays user profile information.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Props:**
+- `user`: `User` object containing `id`, `name`, `email`, `role`, and optional `avatarUrl`.
+- `showEmail`: `boolean` (optional) - Flag to display the email.
+- `showRole`: `boolean` (optional) - Flag to display the user role.
+- `onEdit`: `(userId: string) => void` (optional) - Callback function for edit action.
+- `children`: `React.ReactNode` (optional)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Example Usage:**
+```tsx
+import { UserProfileCard } from './components/UserProfileCard';
+
+const mockUser = {
+  id: "1",
+  name: "Jane Doe",
+  email: "jane@example.com",
+  role: "Admin"
+};
+
+function App() {
+  return (
+    <UserProfileCard 
+      user={mockUser} 
+      showEmail={true} 
+      showRole={true} 
+      onEdit={(id) => console.log('Edit user', id)} 
+    />
+  );
+}
+```
+
+### 3. ProductDisplay
+A card specifically for displaying product details.
+
+**Props:**
+- `product`: `Product` object containing `id`, `name`, `price`, `description`, `inStock`, and optional `imageUrl`.
+- `showDescription`: `boolean` (optional)
+- `showStockStatus`: `boolean` (optional)
+- `onAddToCart`: `(productId: string) => void` (optional)
+- `children`: `React.ReactNode` (optional)
+
+**Example Usage:**
+```tsx
+import { ProductDisplay } from './components/ProductDisplay';
+
+const mockProduct = {
+  id: "p1",
+  name: "Wireless Mouse",
+  price: 29.99,
+  description: "Ergonomic wireless mouse.",
+  inStock: true
+};
+
+function App() {
+  return (
+    <ProductDisplay 
+      product={mockProduct} 
+      showDescription={true} 
+      showStockStatus={true}
+      onAddToCart={(id) => console.log('Added to cart:', id)}
+    />
+  );
+}
 ```
